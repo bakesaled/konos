@@ -30,6 +30,9 @@ export class AuthRoute {
           console.log('here');
           if (user) {
             const result = {
+              username: user.username,
+              firstName: user.firstName,
+              lastName: user.lastName,
               accessToken: Token.generate(user._id)
             };
             return res.status(200).send(result);

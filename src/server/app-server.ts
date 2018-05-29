@@ -86,7 +86,7 @@ export class AppServer {
     console.log('seeding users');
     for (let i = 0; i < userSeed.length; i++) {
       const user = userSeed[i];
-      this.model.user.findOne({ name: user.username }, (err, res) => {
+      this.model.user.findOne({ username: user.username }, (err, res) => {
         this.handleMongooseError(err);
         if (res) {
           this.model.user.update(

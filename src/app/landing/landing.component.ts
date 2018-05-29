@@ -17,6 +17,7 @@ import { first } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingComponent implements OnInit {
+  currentUser: User;
   users: User[] = [];
 
   constructor(
@@ -25,6 +26,7 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.loadAllUsers();
   }
 
