@@ -1,5 +1,8 @@
 import { Application } from 'express';
 import * as express from 'express';
+import { DefaultConfig } from './config/default';
+import * as mongoose from 'mongoose';
+import Q = require('q');
 
 export class AppServer {
   public app: Application;
@@ -13,8 +16,10 @@ export class AppServer {
   }
 
   public init() {
-    this.app.listen(3000);
-    console.log('listening on port', 3000);
+    this.initDb();
+
+    this.app.listen(DefaultConfig.port);
+    console.log('listening on port', DefaultConfig.port);
     this.initRoot();
   }
 
@@ -22,5 +27,18 @@ export class AppServer {
     this.app.get('/', function(req, res) {
       res.sendStatus(200);
     });
+  }
+
+  private initDb() {
+    global.Promise = Q.Promise;
+    (<any>mongoose).Promise = global.Promise;
+    const connection: mongoose.Connection = mongoose.createConnection(
+      DefaultConfig.database,
+      DefaultConfig.dbOptions
+    );
+
+    console.log(
+      `connected to '${connection['name']}' on '${connection['host']}'`
+    );
   }
 }
