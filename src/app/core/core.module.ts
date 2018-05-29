@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthGuard } from './auth.guard';
 import { JwtInterceptor } from './jwt.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @NgModule({
   imports: [CommonModule],
@@ -13,7 +14,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }
+    },
+    AuthService
   ]
 })
 export class CoreModule {}
