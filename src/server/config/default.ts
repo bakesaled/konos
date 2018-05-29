@@ -9,4 +9,12 @@ export class DefaultConfig {
     keepAlive: 300000,
     connectTimeoutMS: 30000
   };
+
+  public static authentication = {
+    token: {
+      secret: 'mySuperSecretKey',
+      issuer: 'konos',
+      audience: 'konos'
+    }
+  };
 }

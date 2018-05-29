@@ -9,6 +9,8 @@ import { Routes } from './routes';
 import { userSeed } from './seed/user.seed';
 import { UserModel } from './models/user.model';
 import { userSchema } from './schemas/user.schema';
+import * as passport from 'passport';
+import { Jwt } from './authentication/jwt';
 
 export class AppServer {
   public app: Application;
@@ -28,6 +30,9 @@ export class AppServer {
 
     this.app.listen(DefaultConfig.port);
     console.log('listening on port', DefaultConfig.port);
+
+    Jwt.create().init(this);
+    this.app.use(passport.initialize());
 
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
@@ -81,7 +86,7 @@ export class AppServer {
     console.log('seeding users');
     for (let i = 0; i < userSeed.length; i++) {
       const user = userSeed[i];
-      this.model.user.findOne({ name: user.name }, (err, res) => {
+      this.model.user.findOne({ name: user.username }, (err, res) => {
         this.handleMongooseError(err);
         if (res) {
           this.model.user.update(

@@ -2,8 +2,12 @@ import {
   Component,
   OnInit,
   ViewEncapsulation,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
 } from '@angular/core';
+import { User } from '../../server/interfaces/user';
+import { UserService } from '../core/user.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'kon-landing',
@@ -13,7 +17,24 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingComponent implements OnInit {
-  constructor() {}
+  users: User[] = [];
 
-  ngOnInit() {}
+  constructor(
+    private userService: UserService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    this.loadAllUsers();
+  }
+
+  private loadAllUsers() {
+    this.userService
+      .getAll()
+      .pipe(first())
+      .subscribe(users => {
+        this.users = users;
+        this.changeDetector.markForCheck();
+      });
+  }
 }

@@ -8,14 +8,15 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http
-      .post<any>('/api/authenticate', {
+      .post<any>('http://localhost:3000/api/auth/login', {
         username: username,
         password: password
       })
       .pipe(
         map(user => {
           // login successful if there's a jwt token in the response
-          if (user && user.token) {
+          console.log('user got', user);
+          if (user && user.accessToken) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
