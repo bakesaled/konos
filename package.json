@@ -7,7 +7,9 @@
     "start:server": "nodemon --exec ts-node ./src/server/index.ts",
     "start:all": "npm run start:server & npm start",
     "build": "ng build",
-    "test": "ng test",
+    "test": "npm run test:unit -- --watch",
+    "test:unit": "jest",
+    "test:ci": "npm run test:unit -- --runInBand",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "_prettier": "prettier --print-width 80 --tab-width 2 --single-quote --trailing-comma none",
@@ -51,10 +53,13 @@
     "@angular/language-service": "^6.0.3",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jest": "^22.2.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
+    "jest": "^23.0.1",
+    "jest-preset-angular": "^5.2.2",
     "karma": "~1.7.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~1.4.2",
@@ -65,5 +70,20 @@
     "ts-node": "^5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~2.7.2"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "src/tsconfig.spec.json"
+      },
+      "__TRANSFORM_HTML__": true
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setup-jest.ts",
+    "transformIgnorePatterns": [],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "setup-jest.ts"
+    ]
   }
 }
