@@ -13,6 +13,9 @@
     "_prettier": "prettier --print-width 80 --tab-width 2 --single-quote --trailing-comma none",
     "prettier": "npm run _prettier -- --write  \"src/**/*.ts\""
   },
+  "engines": {
+    "node": ">=8.9"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.3",
