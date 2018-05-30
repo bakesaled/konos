@@ -24,7 +24,7 @@ steps:
         COPY . /app
 
         # Running tests
-        RUN npm test:ci
+        RUN npm run test:ci
 
         FROM node AS runner
 
